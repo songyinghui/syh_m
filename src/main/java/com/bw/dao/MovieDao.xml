@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bw.dao.MovieDao">
+	<select id="selects" resultType="movie">
+		select * from t_movie
+		<where>
+			<if test="name!=null and name!=''">
+				name like concat("%",#{name},"%")
+			</if>
+			<if test="u1!=null and u1!=''">
+				and uptime >=#{u1}
+			</if>
+			<if test="u2!=null and u2!=''">
+				and uptime &lt;=#{u2}
+			</if>
+			<if test="actor!=null and actor!=''">
+				actor like concat("%",#{actor},"%")
+			</if>
+			<if test="p1!=null and p1!=0">
+				and price >=#{p1}
+			</if>
+			<if test="p2!=null and p2!=0">
+				and price &lt;=#{p2}
+			</if>
+			<if test="years!=null and years!=''">
+				and years=#{years}
+			</if>
+			<if test="l1!=null and l1!=''">
+				and longtime>=#{l1}
+			</if>
+			<if test="l2!=null and l2!=''">
+				and longtime&lt;=#{l2}`
+			</if>
+		</where>
+		<if test="(conn!=null and conn!='') and (jz!=null and jz!='')">
+			order by ${conn} ${jz}
+		</if>
+	</select>
+	<delete id="deleteSome">
+	delete from t_movie where id in (${value})
+	</delete>
+
+
+</mapper>
